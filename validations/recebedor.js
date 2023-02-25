@@ -28,6 +28,8 @@ export function validateRecebedor ({ pix_key_type, pix_key, email, name, cpf }) 
     const errors = [];
     if (!['CPF', 'CNPJ', 'EMAIL', 'TELEFONE', 'CHAVE_ALEATORIA'].includes(pix_key_type)) {
         errors.push('Tipo da chave PIX inválido.');
+    } else if (!checkPixKey(pix_key_type, pix_key)) {
+        errors.push('Chave PIX inválida.');
     }
     if (!name) {
         errors.push('O nome deve ser preenchido.');
@@ -37,9 +39,6 @@ export function validateRecebedor ({ pix_key_type, pix_key, email, name, cpf }) 
     }
     if (!validationRegexes.cpf.test(cpf) && !validationRegexes.cnpj.test(cpf)) {
         errors.push('CPF ou CNPJ inválidos.');
-    }
-    if (!checkPixKey(pix_key_type, pix_key)) {
-        errors.push('Chave PIX inválida.');
     }
 
     return errors;
