@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS "tipo_chave_pix" (
 CREATE TABLE "recebedor" (
 	"id"	INTEGER NOT NULL,
 	"nome"	TEXT NOT NULL,
-	"cpf"	TEXT NOT NULL UNIQUE,
+	"cpf"	TEXT NOT NULL,
 	"email"	TEXT NOT NULL,
 	"id_tipo_chave_pix"	INTEGER NOT NULL,
 	"chave_pix"	TEXT NOT NULL,
