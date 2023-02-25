@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS "tipo_chave_pix" (
+CREATE TABLE "tipo_chave_pix" (
 	"id"	INTEGER NOT NULL,
 	"nome"	TEXT NOT NULL,
 	PRIMARY KEY("id")
@@ -8,7 +8,7 @@ CREATE TABLE "recebedor" (
 	"id"	INTEGER NOT NULL,
 	"nome"	TEXT NOT NULL,
 	"cpf"	TEXT NOT NULL,
-	"email"	TEXT NOT NULL,
+	"email"	TEXT,
 	"id_tipo_chave_pix"	INTEGER NOT NULL,
 	"chave_pix"	TEXT NOT NULL,
 	"validado"	INTEGER NOT NULL DEFAULT 0 CHECK("validado" IN (0, 1)),

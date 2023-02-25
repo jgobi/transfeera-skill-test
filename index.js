@@ -6,7 +6,7 @@ import router from './router.js';
 import { getSystemDatabase } from './database.js';
 const sdb = getSystemDatabase(); // create database
 // close the databases when exiting
-process.on('exit', () => { sdb.close(); pdb.close(); });
+process.on('exit', () => sdb.close());
 process.on('SIGHUP', () => process.exit(128 + 1));
 process.on('SIGINT', () => process.exit(128 + 2));
 process.on('SIGTERM', () => process.exit(128 + 15));
