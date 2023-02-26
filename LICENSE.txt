@@ -1,0 +1,5 @@
+Este software apenas pode ser utilizado durante o processo seletivo da Transfeera para o
+qual eu, João Gabriel de Oliveira Bicalho, estou participando no ano de 2023. Qualquer
+uso deste código para outros fins sem uma autorização prévia por escrito não é permitido.
+
+Uma cópia desta licença deve ser mantida em todas as reproduções deste código-fonte.
