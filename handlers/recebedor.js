@@ -1,5 +1,5 @@
 import { createRecebedor, deleteRecebedor, editRecebedor, getRecebedor, listRecebedor } from '../controllers/recebedor.js';
-import { validateRecebedor, validationRegexes } from '../validations/recebedor.js';
+import { validateRecebedor } from '../validations/recebedor.js';
 import { HTTPError } from './_helpers.js';
 
 /** @type {import('./handlers').BasicHandlerSync} */
@@ -17,6 +17,7 @@ export function listRecebedorHandler (req) {
     };
 }
 
+/** @type {import('./handlers').BasicHandlerSync} */
 export function getRecebedorHandler (req) {
     const { id } = req.params;
 
@@ -47,6 +48,7 @@ export function deleteRecebedorHandler (req) {
     deleteRecebedor(ids);
 }
 
+/** @type {import('./handlers').BasicHandlerSync} */
 export function editRecebedorHandler (req) {
     const { id, pix_key_type, pix_key, email, name, cpf } = req.body;
 

@@ -11,23 +11,9 @@ const stmts = {
     getRecebedor: sdb.prepare('select r.*, t.nome as tipo_chave_pix from recebedor r join tipo_chave_pix t on r.id_tipo_chave_pix = t.id where r.id = ?'),
     updateRecebedorEmail: sdb.prepare('update recebedor set email=? where id=?'),
     updateRecebedor: sdb.prepare('update recebedor set nome=?, cpf=?, email=?, id_tipo_chave_pix=?, chave_pix=? where id=?'),
-
-}
+};
 
 const STATUS_MAP = new Map([['validado', 1], ['rascunho', 0]]);
-
-function prepareRecebedor (r) {
-    return {
-        id: r.id,
-        nome: r.nome,
-        cpf: r.cpf,
-        email: r.email,
-        idTipoChavePix: r.id_tipo_chave_pix,
-        tipoChavePix: r.tipo_chave_pix,
-        chavePix: r.chave_pix,
-        validado: !!r.validado,
-    }
-}
 
 export const listRecebedorDAL = sdb.transaction((limit, offset, q) => {
     const tipoChavePix = new Map(stmts.listTipoChavePix.raw(true).all());
@@ -42,7 +28,7 @@ export const listRecebedorDAL = sdb.transaction((limit, offset, q) => {
 
     return {
         count,
-        items: items.map(prepareRecebedor),
+        items,
     };
 });
 
@@ -51,7 +37,7 @@ export function getRecebedorDAL (id) {
     if (!recebedor) {
         return null;
     }
-    return prepareRecebedor(recebedor);
+    return recebedor;
 }
 
 export function getPixKeyTypeIdDAL (pixKeyType) {
@@ -66,9 +52,11 @@ export const deleteRecebedorDAL = sdb.transaction((ids) => {
     for (const id of ids) {
         stmts.deleteRecebedor.run(id);
     }
-})
+});
 
-
+// Esta função erroneamente implementa regras de negócio para facilitar a utilização das
+// transactions do SQLite neste exercício de programação. Em um sistema real, parte deste
+// código seria movido para dentro do respectivo controller.
 export const editRecebedorDAL = sdb.transaction(({ id, pixKeyType, pixKey, email, name, cpf }) => {
     const recebedor = stmts.getRecebedor.get(id);
     if (!recebedor) return false;
@@ -80,4 +68,4 @@ export const editRecebedorDAL = sdb.transaction(({ id, pixKeyType, pixKey, email
         stmts.updateRecebedor.run(name, cpf, email, pixKeyTypeId, pixKey, id);
     }
     return true;
-})
+});

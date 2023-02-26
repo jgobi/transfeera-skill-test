@@ -2,6 +2,19 @@ import { createRecebedorDAL, deleteRecebedorDAL, editRecebedorDAL, getPixKeyType
 
 const ITEMS_PER_LIST_PAGE = +process.env.ITEMS_PER_LIST_PAGE;
 
+function prepareRecebedor (r) {
+    return {
+        id: r.id,
+        nome: r.nome,
+        cpf: r.cpf,
+        email: r.email,
+        idTipoChavePix: r.id_tipo_chave_pix,
+        tipoChavePix: r.tipo_chave_pix,
+        chavePix: r.chave_pix,
+        validado: !!r.validado,
+    }
+}
+
 export function listRecebedor (page, q) {
     const limit = ITEMS_PER_LIST_PAGE;
     const offset = Math.max(0, ITEMS_PER_LIST_PAGE * (page - 1));
@@ -12,12 +25,14 @@ export function listRecebedor (page, q) {
         limit,
         offset,
         count,
-        items,
+        items: items.map(prepareRecebedor),
     }
 }
 
 export function getRecebedor (id) {
-    return getRecebedorDAL(id);
+    const recebedor = getRecebedorDAL(id);
+    if (!recebedor) return null;
+    return prepareRecebedor(recebedor);
 }
 
 export function createRecebedor ({ name, cpf, email, pixKey, pixKeyType }) {
